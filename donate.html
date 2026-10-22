@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<title>Donate | Blood Bank Finder</title></head>
+<body>
+<div id="site-header"></div>
+
+<div class="phero" style="--c1:var(--teal);--c2:var(--violet)"><div class="wrap"><h1>Become a blood donor</h1><p>One donation can help up to three people. Register once and be ready when someone nearby needs your group.</p></div></div>
+<section style="padding-top:0"><div class="wrap"><div class="panel"><form id="d" novalidate>
+<div class="row"><div><label for="dn">Full name</label><input id="dn" required></div><div><label for="dg">Blood group</label><select id="dg"></select></div><div><label for="da">Age</label><input id="da" type="number" min="1" max="99" required></div></div>
+<div class="row"><div><label for="dc">City</label><select id="dc"></select></div><div><label for="dp">Phone</label><input id="dp" type="tel" required placeholder="+91 98XXX XXXXX"></div><div><label for="de">Gmail</label><input id="de" type="email" placeholder="name@gmail.com"></div></div>
+<button class="btn teal" type="submit">Register as donor</button></form><div id="dm"></div></div>
+
+<h2 class="title" style="margin-top:70px">Can you donate?</h2><p class="sub">The usual rules at most blood banks. The doctor at the centre makes the final decision.</p>
+<div class="grid g4">
+<div class="card" style="--c:var(--red)"><h3>Age</h3><p>18 to 65 years.</p></div>
+<div class="card" style="--c:var(--violet)"><h3>Weight</h3><p>At least 50 kg.</p></div>
+<div class="card" style="--c:var(--teal)"><h3>Haemoglobin</h3><p>12.5 g/dL or more.</p></div>
+<div class="card" style="--c:var(--coral)"><h3>Gap</h3><p>3 months after the last donation.</p></div></div>
+
+<h2 class="title" style="margin-top:70px">Donation day</h2><p class="sub">&nbsp;</p>
+<div class="timeline" style="max-width:720px;margin:0 auto">
+<div class="step" style="--c:var(--red)"><b>1</b><div><h3>Register and check-in</h3><p>Short form and a quick health check.</p></div></div>
+<div class="step" style="--c:var(--violet)"><b>2</b><div><h3>Donate</h3><p>The donation itself takes about 10 minutes.</p></div></div>
+<div class="step" style="--c:var(--teal)"><b>3</b><div><h3>Rest and refresh</h3><p>Have a snack and a drink, and avoid heavy exercise for the day.</p></div></div></div>
+
+<h2 class="title" style="margin-top:70px">Registered donors (this browser)</h2><div class="list" id="dl" style="max-width:720px;margin:20px auto 0"></div></div></section>
+<div id="site-footer"></div>
+<script src="script.js"></script>
+<script>
+fillSelect(dg,GROUPS);fillSelect(dc,CITIES,"Select city");
+function show(){var l=load("bbf_donors").slice(-6).reverse();document.getElementById("dl").innerHTML=l.length?l.map(function(x){return'<div class="step" style="--c:var(--teal)"><b>'+esc(x.g)+'</b><div><strong>'+esc(x.n)+'</strong><p class="meta">'+esc(x.c)+' &middot; '+esc(x.p)+'</p></div></div>'}).join(""):'<p class="meta" style="text-align:center">No donors registered yet.</p>'}show();
+d.onsubmit=function(ev){ev.preventDefault();var m=document.getElementById("dm");
+var age=+da.value;
+if(!dn.value.trim()||!dc.value||!/^[+\d][\d\s-]{7,}$/.test(dp.value.trim())){m.innerHTML='<div class="msg err">Please fill in your name, city and a valid phone number.</div>';return}
+if(age<18||age>65){m.innerHTML='<div class="msg err">Donors are usually between 18 and 65 years old. Please check with your nearest blood bank.</div>';return}
+var a=load("bbf_donors");a.push({n:dn.value.trim(),g:dg.value,c:dc.value,p:dp.value.trim()});save("bbf_donors",a);show();
+m.innerHTML='<div class="msg ok">Thank you, '+esc(dn.value.trim())+'! You are registered as a '+esc(dg.value)+' donor in '+esc(dc.value)+'.</div>';d.reset();fillSelect(dg,GROUPS)};
+</script>
+</body></html>

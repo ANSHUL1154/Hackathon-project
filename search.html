@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<title>Find Blood | Blood Bank Finder</title></head>
+<body>
+<div id="site-header"></div>
+
+<div class="phero" style="--c1:var(--violet);--c2:var(--pink)"><div class="wrap"><h1>Find blood near you</h1><p>Choose a blood group and city. Results show units in stock and a call button for each bank.</p></div></div>
+<section style="padding-top:0"><div class="wrap"><div class="panel">
+<div class="row"><div><label for="g">Blood group</label><select id="g"></select></div><div><label for="c">City</label><select id="c"></select></div>
+<div><label for="o">Show</label><select id="o"><option value="1">Only banks with stock</option><option value="">All banks</option></select></div></div>
+<p class="meta" id="count"></p><div class="list" id="res"></div></div></div></section>
+<div id="site-footer"></div>
+<script src="script.js"></script>
+<script>
+var q=new URLSearchParams(location.search);
+var g=document.getElementById("g"),c=document.getElementById("c"),o=document.getElementById("o"),res=document.getElementById("res");
+fillSelect(g,GROUPS);fillSelect(c,CITIES,"All cities");
+if(q.get("group")&&GROUPS.indexOf(q.get("group"))>-1)g.value=q.get("group");
+if(q.get("city"))c.value=q.get("city");
+function run(){renderBanks(res,g.value,c.value,!!o.value);document.getElementById("count").textContent=res.children.length&&res.querySelector(".bank")?res.querySelectorAll(".bank").length+" blood banks found for "+g.value:""}
+g.onchange=c.onchange=o.onchange=run;run();
+</script>
+</body></html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<title>Contact | Blood Bank Finder</title></head>
+<body>
+<div id="site-header"></div>
+
+<div class="phero" style="--c1:var(--pink);--c2:var(--violet)"><div class="wrap"><h1>Contact us</h1><p>Questions, corrections or a blood bank that wants to be listed? We reply quickly.</p></div></div>
+<section style="padding-top:0"><div class="wrap"><div class="grid g3" style="margin-top:-30px;position:relative">
+<div class="card" style="--c:var(--red)"><div class="ic">📞</div><h3>Phone</h3><p><a href="tel:+919876543210"><b>+91 98765 43210</b></a><br><a href="tel:+919123456780">+91 91234 56780</a></p></div>
+<div class="card" style="--c:var(--teal)"><div class="ic">✉️</div><h3>Gmail</h3><p><a href="mailto:bloodbankfinder.help@gmail.com"><b>bloodbankfinder.help@gmail.com</b></a><br><a href="mailto:bbf.donors@gmail.com">bbf.donors@gmail.com</a></p></div>
+<div class="card" style="--c:var(--sun)"><div class="ic">📍</div><h3>Office</h3><p>12, Red Cross Lane,<br>New Delhi 110001<br>Open 24 hours</p></div></div>
+<div class="panel" style="margin-top:40px;max-width:760px;margin-left:auto;margin-right:auto"><h2 style="margin-bottom:16px">Send a message</h2>
+<form id="cf" novalidate><div class="row"><div><label for="cn">Your name</label><input id="cn" required></div><div><label for="ce">Your email</label><input id="ce" type="email" required></div></div>
+<label for="cm">Message</label><textarea id="cm" rows="5" required></textarea><button class="btn violet" type="submit" style="margin-top:16px">Send message</button></form><div id="cmsg"></div></div></div></section>
+<div id="site-footer"></div>
+<script src="script.js"></script>
+<script>
+cf.onsubmit=function(ev){ev.preventDefault();var m=document.getElementById("cmsg");
+if(!cn.value.trim()||!/^\S+@\S+\.\S+$/.test(ce.value)||!cm.value.trim()){m.innerHTML='<div class="msg err">Please enter your name, a valid email and a message.</div>';return}
+var a=load("bbf_messages");a.push({n:cn.value,e:ce.value,m:cm.value});save("bbf_messages",a);
+m.innerHTML='<div class="msg ok">Thanks, '+esc(cn.value.trim())+'. Your message is saved. For urgent needs please call +91 98765 43210.</div>';cf.reset()};
+</script>
+</body></html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<title>Urgent Request | Blood Bank Finder</title></head>
+<body>
+<div id="site-header"></div>
+
+<div class="phero" style="--c1:var(--red);--c2:var(--coral)"><div class="wrap"><h1>Urgent blood request</h1><p>Tell us what you need. You will instantly see banks that have it, ready to call.</p></div></div>
+<section style="padding-top:0"><div class="wrap"><div class="panel"><form id="f" novalidate>
+<div class="row"><div><label for="pn">Patient name</label><input id="pn" required placeholder="e.g. Aarav Sharma"></div>
+<div><label for="bg">Blood group needed</label><select id="bg" required></select></div>
+<div><label for="un">Units needed</label><input id="un" type="number" min="1" max="10" value="2"></div></div>
+<div class="row"><div><label for="ct">City</label><select id="ct" required></select></div>
+<div><label for="hp">Hospital name</label><input id="hp" placeholder="e.g. City General Hospital"></div>
+<div><label for="ph">Your phone number</label><input id="ph" type="tel" required placeholder="+91 98XXX XXXXX"></div></div>
+<button class="btn" type="submit">Find blood now</button></form>
+<div id="m"></div><div class="list" id="r"></div></div>
+<div style="margin-top:50px"><h2 class="title" style="font-size:1.6rem">Your recent requests</h2><div class="list" id="hist" style="max-width:720px;margin:20px auto 0"></div></div></div></section>
+<div id="site-footer"></div>
+<script src="script.js"></script>
+<script>
+fillSelect(document.getElementById("bg"),GROUPS);fillSelect(document.getElementById("ct"),CITIES,"Select city");
+document.getElementById("bg").value="O-";
+function hist(){var h=load("bbf_requests").slice(-5).reverse(),e=document.getElementById("hist");
+e.innerHTML=h.length?h.map(function(x){return'<div class="step" style="--c:var(--red)"><b>'+esc(x.bg)+'</b><div><strong>'+esc(x.pn)+'</strong><p class="meta">'+esc(x.un)+' unit(s) in '+esc(x.ct)+(x.hp?' &middot; '+esc(x.hp):'')+' &middot; '+esc(x.when)+'</p></div></div>'}).join(""):'<p class="meta" style="text-align:center">No requests yet. They are saved only in this browser.</p>'}
+hist();
+document.getElementById("f").onsubmit=function(ev){ev.preventDefault();
+var v={pn:pn.value.trim(),bg:bg.value,un:un.value,ct:ct.value,hp:hp.value.trim(),ph:ph.value.trim(),when:new Date().toLocaleString()};
+var m=document.getElementById("m");
+if(!v.pn||!v.ct||!/^[+\d][\d\s-]{7,}$/.test(v.ph)){m.innerHTML='<div class="msg err">Please enter the patient name, city and a valid phone number.</div>';return}
+var a=load("bbf_requests");a.push(v);save("bbf_requests",a);hist();
+m.innerHTML='<div class="msg ok">Request saved for '+esc(v.pn)+'. Banks in '+esc(v.ct)+' with '+esc(v.bg)+' are shown below. Call the first one now.</div>';
+renderBanks(document.getElementById("r"),v.bg,v.ct,true);document.getElementById("r").scrollIntoView({behavior:"smooth"})};
+</script>
+</body></html>

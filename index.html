@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<title>Home | Blood Bank Finder</title></head>
+<body>
+<div id="site-header"></div>
+
+<div class="hero"><div class="wrap">
+<div><h1>Urgent blood needed? <span>Find it in minutes.</span></h1>
+<p class="lead">Pick a blood group and see which nearby blood banks have units in stock right now, with a phone number to call straight away.</p>
+<div class="btns"><a class="btn" href="search.html?group=O-">Find O-negative blood</a><a class="btn ghost" href="request.html">Post an urgent request</a></div></div>
+<div class="quick"><h2>Which blood group do you need?</h2><p>Tap one to see banks near you.</p>
+<div class="groups" id="gs"></div>
+<div style="margin-top:16px"><label for="qc">City</label><select id="qc"></select></div>
+<a class="btn teal" id="go" href="search.html" style="margin-top:16px;width:100%;text-align:center">Show blood banks</a></div>
+</div>
+<svg class="wave" viewBox="0 0 1440 50" preserveAspectRatio="none"><path d="M0 30 C360 70 720 -10 1440 30 L1440 50 L0 50Z" fill="#fffaf8"/></svg></div>
+
+<section><div class="wrap"><h2 class="title">How it works</h2><p class="sub">Three steps, built for stressful moments.</p>
+<div class="grid g3">
+<div class="card" style="--c:var(--red)"><div class="ic">🩸</div><h3>Choose blood group</h3><p>Select the group and city. O-negative families get shown first.</p></div>
+<div class="card" style="--c:var(--teal)"><div class="ic">✅</div><h3>See verified stock</h3><p>Each bank shows units available and when the stock was last checked.</p></div>
+<div class="card" style="--c:var(--violet)"><div class="ic">📞</div><h3>Call or email</h3><p>One tap opens the phone dialer or your email app with the message ready.</p></div>
+</div></div></section>
+
+<div class="stats"><div class="wrap grid g4"><div><b>14</b>Blood banks listed</div><div><b>8</b>Blood groups covered</div><div><b>10</b>Cities</div><div><b>24x7</b>Emergency help line</div></div></div>
+
+<section class="tint"><div class="wrap"><h2 class="title">Who can give to whom?</h2><p class="sub">A quick guide for families searching for a compatible group when the exact one is not available.</p><div class="tw"><table><thead><tr><th>Blood group</th><th>Can give to</th><th>Can receive from</th></tr></thead><tbody>
+<tr><td><b>O-</b></td><td>Everyone (universal donor)</td><td>O-</td></tr>
+<tr><td><b>O+</b></td><td>O+, A+, B+, AB+</td><td>O-, O+</td></tr>
+<tr><td><b>A-</b></td><td>A-, A+, AB-, AB+</td><td>O-, A-</td></tr>
+<tr><td><b>A+</b></td><td>A+, AB+</td><td>O-, O+, A-, A+</td></tr>
+<tr><td><b>B-</b></td><td>B-, B+, AB-, AB+</td><td>O-, B-</td></tr>
+<tr><td><b>B+</b></td><td>B+, AB+</td><td>O-, O+, B-, B+</td></tr>
+<tr><td><b>AB-</b></td><td>AB-, AB+</td><td>O-, A-, B-, AB-</td></tr>
+<tr><td><b>AB+</b></td><td>AB+</td><td>Everyone (universal receiver)</td></tr>
+</tbody></table></div>
+<div class="btns" style="justify-content:center;margin-top:28px"><a class="btn violet" href="donate.html">Become a donor</a></div></div></section>
+
+<section><div class="wrap"><h2 class="title">Why families use Blood Bank Finder</h2><p class="sub">&nbsp;</p>
+<div class="grid g2">
+<div class="card" style="--c:var(--coral)"><h3>Fast search</h3><p>Filter by group and city, sorted so the bank with the most units appears first.</p></div>
+<div class="card" style="--c:var(--sun)"><h3>Low stock warnings</h3><p>Yellow and red labels tell you before you spend time travelling.</p></div>
+<div class="card" style="--c:var(--pink)"><h3>Urgent requests</h3><p>Fill one short form and see matching banks with call buttons instantly.</p></div>
+<div class="card" style="--c:var(--teal)"><h3>Donor sign-up</h3><p>Register as a donor so your group can be matched when someone needs it.</p></div>
+</div></div></section>
+
+<div id="site-footer"></div>
+<script src="script.js"></script>
+<script>
+fillSelect(document.getElementById("qc"),CITIES,"Any city");
+var sel="O-",gs=document.getElementById("gs"),go=document.getElementById("go"),qc=document.getElementById("qc");
+function upd(){go.href="search.html?group="+encodeURIComponent(sel)+(qc.value?"&city="+encodeURIComponent(qc.value):"")}
+GROUPS.forEach(function(g){var b=document.createElement("button");b.type="button";b.className="g"+(g===sel?" sel":"");b.textContent=g;
+b.onclick=function(){sel=g;[].forEach.call(gs.children,function(c){c.classList.toggle("sel",c===b)});upd()};gs.appendChild(b)});
+qc.onchange=upd;upd();
+</script>
+</body></html>
